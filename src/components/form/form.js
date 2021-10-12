@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { getGeolocation, submitDamage } from "../../helpers";
+import { getDamages, getGeolocation, submitDamage } from "../../helpers";
 
 export function Form() {
   const [damage, setDamage] = useState("");
   const [geolocation, setGeolocation] = useState({});
+  const [storedDamages, setStoredDamages] = useState([]);
 
   useEffect(() => {
     const _geolocation = getGeolocation();
@@ -16,6 +17,11 @@ export function Form() {
     { value: "follenTree", text: "Follen tree" },
     { value: "brokenTile", text: "Broken tile" },
   ];
+
+  useEffect(() => {
+    const response = getDamages();
+    setStoredDamages(response);
+  }, []);
 
   return (
     <div>
@@ -31,12 +37,23 @@ export function Form() {
       </select>
       <button
         onClick={() => {
-          console.log({ damage, geolocation });
-          submitDamage(damage, geolocation);
+          submitDamage(damage, geolocation, "from Form");
         }}
       >
         Submit
       </button>
+      <div>
+        {storedDamages.length > 0 &&
+          storedDamages?.map((storedDamage) => (
+            <div>
+              {Object.keys(storedDamage).map((key) => (
+                <span>
+                  {key}: {storedDamage[key]}
+                </span>
+              ))}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }
