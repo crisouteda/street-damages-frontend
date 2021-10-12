@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form } from "./components";
+import { InsertForm, GetForm } from "./components";
 import "./App.css";
 import { componentDidMount } from "./helpers";
 
@@ -7,7 +7,12 @@ function App() {
   useEffect(() => {
     componentDidMount();
   }, []);
-  return <Form />;
+  return (
+    <div style={{ display: "flex", flexDirection: "column", width: "40%" }}>
+      <InsertForm />
+      <GetForm />
+    </div>
+  );
 }
 
 export default App;
