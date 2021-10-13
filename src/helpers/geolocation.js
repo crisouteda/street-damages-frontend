@@ -6,11 +6,16 @@ export function componentDidMount() {
   }
 }
 
-export function getGeolocation() {
-  navigator.geolocation.getCurrentPosition(function (position) {
-    return {
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude,
-    };
+function getCoordinates() {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
   });
+}
+export async function getGeolocation() {
+  const position = await getCoordinates();
+  const param = {
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
+  };
+  return param;
 }
