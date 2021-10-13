@@ -1,9 +1,17 @@
 import axios from "axios";
 
-export const submitDamage = async (damage, geolocation) => {
-  await axios.post("http://localhost:4000/insert", {
+export const submitDamage = async (damage, geolocation, province) => {
+  await axios.post("http://localhost:4000/insertDamage", {
     damage,
     geolocation,
+    province,
+  });
+};
+
+export const submitUser = async (province, email) => {
+  await axios.post("http://localhost:4000/insertUser", {
+    province,
+    email,
   });
 };
 

@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getDamages, getGeolocation, submitDamage } from "../../helpers";
 
-export function Form() {
+export function InsertForm() {
   const [damage, setDamage] = useState("");
   const [geolocation, setGeolocation] = useState({});
   const [storedDamages, setStoredDamages] = useState([]);
+  const [province, setProvince] = useState("");
 
   useEffect(() => {
     const _geolocation = getGeolocation();
@@ -24,7 +25,7 @@ export function Form() {
   }, []);
 
   return (
-    <div>
+    <div style={{ background: "red" }}>
       <h1>Insert a damage</h1>
       <select
         id="damage"
@@ -35,25 +36,19 @@ export function Form() {
           <option value={damageOption.value}>{damageOption.text}</option>
         ))}
       </select>
+      <span>Write your province</span>
+      <input
+        onChange={(e) => {
+          setProvince(e.target.value);
+        }}
+      ></input>
       <button
         onClick={() => {
-          submitDamage(damage, geolocation, "from Form");
+          submitDamage(damage, geolocation, province);
         }}
       >
         Submit
       </button>
-      <div>
-        {storedDamages.length > 0 &&
-          storedDamages?.map((storedDamage) => (
-            <div>
-              {Object.keys(storedDamage).map((key) => (
-                <span>
-                  {key}: {storedDamage[key]}
-                </span>
-              ))}
-            </div>
-          ))}
-      </div>
     </div>
   );
 }
